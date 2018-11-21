@@ -1,0 +1,12 @@
+@using tephraSystemEditor.Models
+
+@model Bonus
+<div>
+    <b>@Model.mod.ToString()</b>
+    @{
+        string val = "";
+        if(Model.Value > 0){ val = " + "; }
+        val += Model.Value.ToString();
+    }
+    @val
+</div>

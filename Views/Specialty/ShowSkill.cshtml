@@ -1,0 +1,7 @@
+@model Skill
+
+    <div>
+        <h2>@Model.Name</h2>
+        @await Html.PartialAsync("_SpecialtyListView", @Model.Specialties)
+        @Html.ActionLink("Create New", "Create", new {skillID = Model.ID})
+    </div>

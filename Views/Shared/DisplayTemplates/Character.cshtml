@@ -1,0 +1,14 @@
+@using tephraSystemEditor.Models
+
+
+@model Character
+
+<div class="row">
+    <div class="col-md-2">
+        @Model.Name
+    </div>
+    <div class="col-md-2">
+        @Model.Level
+    </div>
+    @Html.DisplayFor(p => p.Specialties)
+</div>

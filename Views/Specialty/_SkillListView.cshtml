@@ -1,0 +1,11 @@
+@model IEnumerable<Skill>
+
+
+@foreach(var skill in Model)
+{
+    <div>
+        <h2>@skill.Name</h2>
+        @await Html.PartialAsync("_SpecialtyListView", @skill.Specialties)
+        @Html.ActionLink("Create New", "Create", new {skillID = skill.ID})
+    </div>
+}

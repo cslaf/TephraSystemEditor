@@ -1,0 +1,8 @@
+@using tephraSystemEditor.Models
+
+@model Skill
+<div>
+    <label>@Model.Name</label>
+    @Model.Description
+    @Html.DisplayFor(s => s.Specialties)
+</div>

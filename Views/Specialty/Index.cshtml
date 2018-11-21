@@ -1,0 +1,11 @@
+@model IEnumerable<Attr>
+
+
+@foreach(var attr in Model)
+{
+    <p><h1>@attr.Name</h1></p>
+    <div>
+        @await Html.PartialAsync("_SkillListView", @attr.Skills)
+    </div>
+}
+

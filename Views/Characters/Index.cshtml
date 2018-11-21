@@ -1,0 +1,7 @@
+@model List<Character>
+@using Microsoft.AspNetCore.Identity
+@inject UserManager<IdentityUser> UserManager
+
+@Html.DisplayForModel()
+
+@Html.ActionLink("Create", "Create", new { userID=@UserManager.GetUserId(User)})

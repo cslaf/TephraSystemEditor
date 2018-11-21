@@ -1,0 +1,15 @@
+@using tephraSystemEditor.Models
+
+@model Bonus
+    <div class="row">
+        @Html.HiddenFor(b => Model.ID)
+        <div class ="col-sm-4">
+            @Html.DropDownListFor( 
+            b => Model.mod,
+            new SelectList(Enum.GetValues(typeof(Modifier))),
+        "Modifer")
+        </div>
+        <div class ="col-sm-4">
+            @Html.TextBoxFor(b => Model.Value, new { @type = "number", @class="col-sm-12"})
+        </div>
+    </div>

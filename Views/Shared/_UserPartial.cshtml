@@ -1,0 +1,10 @@
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+
+@if (SignInManager.IsSignedIn(User))
+{
+    <li>
+        @Html.ActionLink("Characters", "Index", "Characters", new{ userID = @UserManager.GetUserId(User)})
+    </li>
+}

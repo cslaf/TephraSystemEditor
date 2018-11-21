@@ -1,0 +1,10 @@
+@model Specialty
+@using (Html.BeginForm()) 
+{
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.EditorForModel()
+    // ADD A SKILL SELECTOR FIELD DROPDOWN?
+    <div class="col-md-offset-1 col-md-10">
+        <input type="submit" value="Edit" class="btn btn-default" />
+    </div>
+}

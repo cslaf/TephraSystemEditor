@@ -1,0 +1,25 @@
+@using tephraSystemEditor.Models
+
+@model Character
+
+<div>
+    <hr>
+    <div class="row">
+        <label class="col-sm-2">Name</label>
+        @Html.TextBoxFor(b => Model.Name, new {@class = "col-sm-4"} )
+    </div>
+    <div class="row">
+        <label class="col-sm-2">Description</label>
+        @Html.TextAreaFor(b => Model.Description, new {@class = "col-sm-10"})
+    </div>
+    <div class ="row">
+        <div class="col-sm-2">
+        <label>Level</label>
+        </div>
+        <div class="col-sm-4">
+        @Html.TextBoxFor(b => Model.Level, new { @type = "number", @min="1", @max="12", @class="col-sm-12"})
+        </div>
+    </div>
+
+    <!--- ADD SPECIALTY BROWSER PARIAL IN HERE? --->
+</div>
