@@ -9,7 +9,7 @@ namespace tephraSystemEditor.Models
 {
     public class CharactersDataAccessLayer
     {
-        string connectionString = "server=192.168.1.29;uid=test;pwd=12345;database=tephra_system";
+        string connectionString = "server=localhost;uid=root;pwd=12345;database=tephra_system";
 
         public IEnumerable<Character> GetCharacters(string userID)
         {
