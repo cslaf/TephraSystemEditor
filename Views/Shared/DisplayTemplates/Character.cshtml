@@ -4,10 +4,16 @@
 @model Character
 
 <div class="row">
+    <div class="col-md-1">
+        <label>ID :</label>
+        @Html.DisplayFor(b => b.ID)
+        @Html.HiddenFor(b => b.UserID)
+    </div>
     <div class="col-md-2">
         @Model.Name
     </div>
     <div class="col-md-2">
+        <label>Level :</label>
         @Model.Level
     </div>
     @Html.DisplayFor(p => p.Specialties)

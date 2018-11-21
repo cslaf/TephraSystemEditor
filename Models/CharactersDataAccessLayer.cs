@@ -42,6 +42,39 @@ namespace tephraSystemEditor.Models
             return characters;
         }
 
+        public Character GetCharacter(int id)
+        {
+            Character character = null;
+            using(var con = new MySql.Data.MySqlClient.MySqlConnection(connectionString))
+            {
+                var cmd = new MySql.Data.MySqlClient.MySqlCommand
+                ("SELECT CharacterID, Name, Description, UserID, CharacterID, Level "
+                +"FROM Characters WHERE CharacterID = @CharacterID"
+                ,con);
+                cmd.CommandType = CommandType.Text;
+                cmd.Parameters.AddWithValue("@CharacterID", id);
+
+                con.Open();
+                var rdrCharacter = cmd.ExecuteReader();
+
+                while (rdrCharacter.Read())
+                {
+                    character = new Character();
+                    character.ID = rdrCharacter.GetInt32("CharacterID");
+                    character.Name = rdrCharacter["Name"].ToString();
+                    character.Description = rdrCharacter["Description"].ToString();
+                    character.UserID = rdrCharacter.GetString("UserID");
+                    character.Level = (int) rdrCharacter["Level"];
+                    character.Specialties = GetCharacterSpecialties(character).ToList();
+
+                }
+
+                con.Close();                
+            }
+            return character;
+
+        }
+
        public IEnumerable<Specialty> GetCharacterSpecialties(Character character)
        {
             var specialties = new List<Specialty>();
@@ -51,7 +84,7 @@ namespace tephraSystemEditor.Models
             using(var con = new MySql.Data.MySqlClient.MySqlConnection(connectionString))
             {
                 var cmd = new MySql.Data.MySqlClient.MySqlCommand(
-                    "SELECT ID, CharacterID, SpecialtyID " + 
+                    "SELECT ID, CharacterID, Ch.SpecialtyID " + 
                     "FROM CharactersSpecialty AS Ch JOIN Specialties AS Sp ON Sp.SpecialtyID = Ch.SpecialtyID " +
                     "WHERE CharacterID = @CharacterID"
                     , con
@@ -135,10 +168,11 @@ namespace tephraSystemEditor.Models
             using(var con = new MySql.Data.MySqlClient.MySqlConnection(connectionString))
             {
                 var cmd = new MySql.Data.MySqlClient.MySqlCommand(
-                    "UPDATE Characters SET Name = @Name, Description = @Description, Level = @Level" + 
+                    "UPDATE Characters SET Name = @Name, Description = @Description, Level = @Level " + 
                     "WHERE @CharacterID = CharacterID"
                     , con
                 );
+                cmd.Parameters.AddWithValue("@CharacterID", ch.ID);
                 cmd.Parameters.AddWithValue("@Name", ch.Name);
                 cmd.Parameters.AddWithValue("@Description", ch.Description);
                 cmd.Parameters.AddWithValue("@Level", ch.Level);

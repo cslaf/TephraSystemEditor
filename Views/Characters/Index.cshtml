@@ -2,6 +2,21 @@
 @using Microsoft.AspNetCore.Identity
 @inject UserManager<IdentityUser> UserManager
 
-@Html.DisplayForModel()
+
+<hr/>
+@foreach(var character in Model)
+{
+    @Html.DisplayFor(c => character)
+    <div class="row">
+        
+        <div class="col-md-1">
+            @Html.ActionLink("Edit", "Edit", new { character.ID })
+        </div>
+        <div class="col-md-1">
+            @Html.ActionLink("Delete", "Delete", new { character.ID })
+        </div>
+    </div>
+    <hr/>
+}
 
 @Html.ActionLink("Create", "Create", new { userID=@UserManager.GetUserId(User)})

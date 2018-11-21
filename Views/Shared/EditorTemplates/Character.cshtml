@@ -4,6 +4,8 @@
 
 <div>
     <hr>
+    @Html.DisplayFor(b => b.ID)
+    @Html.DisplayFor(b => b.UserID)
     <div class="row">
         <label class="col-sm-2">Name</label>
         @Html.TextBoxFor(b => Model.Name, new {@class = "col-sm-4"} )
@@ -21,5 +23,6 @@
         </div>
     </div>
 
+    @Html.DisplayFor(p => p.Specialties)
     <!--- ADD SPECIALTY BROWSER PARIAL IN HERE? --->
 </div>

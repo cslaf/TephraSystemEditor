@@ -5,6 +5,6 @@
 @if (SignInManager.IsSignedIn(User))
 {
     <li>
-        @Html.ActionLink("Characters", "Index", "Characters", new{ userID = @UserManager.GetUserId(User)})
+        @Html.ActionLink("Characters", "Index", "Characters")
     </li>
 }

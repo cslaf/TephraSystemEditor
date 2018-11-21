@@ -1,0 +1,16 @@
+@model Character
+
+@using (Html.BeginForm()) 
+{
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.AntiForgeryToken()
+
+    @Html.EditorForModel()
+
+    <div class="col-md-offset-1 col-md-10">
+        <input type="submit" value="Edit" class="btn btn-default" />
+    </div>
+
+}
+
+@await Html.PartialAsync("_Footer")

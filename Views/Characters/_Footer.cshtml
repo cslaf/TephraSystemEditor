@@ -1,0 +1,7 @@
+@using Microsoft.AspNetCore.Identity
+@inject UserManager<IdentityUser> UserManager
+
+<hr/>
+<div class="row">
+@Html.ActionLink("Back To List", "Index", new { userID=@UserManager.GetUserId(User)})
+</div>
