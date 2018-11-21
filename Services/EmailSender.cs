@@ -25,7 +25,7 @@ namespace tephraSystemEditor.Services
             var client = new SendGridClient(apiKey);
             var msg = new SendGridMessage()
             {
-                From = new EmailAddress("pwmanager@tephra.com", "Password Recovery"),
+                From = new EmailAddress("cade.schlaefli@gmail.com", "Password Recovery"),
                 Subject = subject,
                 PlainTextContent = message,
                 HtmlContent = message

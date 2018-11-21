@@ -129,7 +129,18 @@ namespace tephraSystemEditor.Models
 
                 foreach(var specialty in character.Specialties)
                 {
-                    cmd = new MySql.Data.MySqlClient.MySqlCommand(
+                    AddCharacterSpecialty(CharacterID, specialty);
+                }
+                con.Close();
+            }
+        }
+
+        public void AddCharacterSpecialty(int CharacterID, Specialty specialty)
+        {
+                using(var con = new MySql.Data.MySqlClient.MySqlConnection(connectionString))
+                {
+                    con.Open();
+                    var cmd = new MySql.Data.MySqlClient.MySqlCommand(
                         "INSERT INTO CharactersSpecialty(CharacterID, SpecialtyID, Notes) VALUES(@CharacterID, @SpID, @Notes)"
                         , con
                     );
@@ -137,10 +148,11 @@ namespace tephraSystemEditor.Models
                     cmd.Parameters.AddWithValue("@CharacterID", CharacterID);
                     cmd.Parameters.AddWithValue("@SpID", specialty.ID);
                     cmd.ExecuteNonQuery();
+                    con.Close();
                 }
-                con.Close();
-            }
+                
         }
+
         public void Delete(Character ch)
         {
             using(var con = new MySql.Data.MySqlClient.MySqlConnection(connectionString))
@@ -158,6 +170,22 @@ namespace tephraSystemEditor.Models
                     , con
                 );
                 cmd.Parameters.AddWithValue("@CharacterID", ch.ID);
+                cmd.ExecuteNonQuery();
+                con.Close();
+            }
+        }
+
+        public void DeleteCharacterSpecialty(int characterID, Specialty specialty)
+        {
+            using(var con = new MySql.Data.MySqlClient.MySqlConnection(connectionString))
+            {
+                con.Open();
+                var cmd = new MySql.Data.MySqlClient.MySqlCommand(
+                    "DELETE FROM Characters WHERE @CharacterID = CharacterID AND @spID = ID"
+                    , con
+                    );
+                cmd.Parameters.AddWithValue("@spID", specialty.ID);
+                cmd.Parameters.AddWithValue("@CharacterID", characterID);
                 cmd.ExecuteNonQuery();
                 con.Close();
             }
@@ -182,18 +210,28 @@ namespace tephraSystemEditor.Models
 
                 foreach(var specialty in ch.Specialties)
                 {
-                    cmd = new MySql.Data.MySqlClient.MySqlCommand(
-                        "UPDATE CharactersSpecialty SET SpecialtyID = @SpecialtyID, Notes = @Notes)"
-                        +" WHERE CharacterID = @CharacterID"
-                        , con
-                    );
-                    cmd.Parameters.AddWithValue("@Notes", specialty.Notes);
-                    cmd.Parameters.AddWithValue("@CharacterID", ch.ID);
-                    cmd.Parameters.AddWithValue("@SpID", specialty.ID);
-                    cmd.ExecuteNonQuery();
+                    UpdateCharacterSpecialty( ch.ID, specialty);
                 }
                 con.Close();
             }
         } 
+
+        public void UpdateCharacterSpecialty(int CharacterID, Specialty specialty)
+        {
+            using(var con = new MySql.Data.MySqlClient.MySqlConnection(connectionString))
+            {
+                con.Open();
+                var cmd = new MySql.Data.MySqlClient.MySqlCommand(
+                    "UPDATE CharactersSpecialty SET SpecialtyID = @SpecialtyID, Notes = @Notes)"
+                    +" WHERE CharacterID = @CharacterID"
+                    , con
+                    );
+                cmd.Parameters.AddWithValue("@Notes", specialty.Notes);
+                cmd.Parameters.AddWithValue("@CharacterID", CharacterID);
+                cmd.Parameters.AddWithValue("@SpID", specialty.ID);
+                cmd.ExecuteNonQuery();
+                con.Close();
+            }
+        }
     }
 }

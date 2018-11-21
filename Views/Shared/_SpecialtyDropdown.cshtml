@@ -14,20 +14,15 @@
         @foreach(var attr in @m)
         {
             <li class="dropdown-submenu">
-                <a tabindex="-1" href="#">
-                    @attr.Name
-                </a>
-                <ul class="dropdown-menu">
-                    <li>
-                        @Html.ActionLink("All", "ShowAttribute", "Specialty", new {name = @attr.Name})
-                    </li>
+                    @Html.ActionLink(@attr.Name, "ShowAttribute", "Specialty", new {name = @attr.Name})
+                    <ul>
                     @foreach(var skill in attr.Skills)
                     {
                        <li>
                            @Html.ActionLink(@skill.Name, "ShowSkill", "Specialty", new { name = @skill.Name})
                        </li>
                     }
-                </ul>
+                    </ul>
             </li>
         }
     </ul>

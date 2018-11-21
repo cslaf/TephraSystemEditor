@@ -18,8 +18,7 @@ namespace tephraSystemEditor.Areas.Identity
             builder.ConfigureServices((context, services) => {
                 services.AddDbContext<tephraSystemEditorIdentityDbContext>(options =>
                     options.UseMySql(
-                        "server=192.168.1.29;uid=test;pwd=12345;database=tephra_system"));
-                        //context.Configuration.GetConnectionString("default")));
+                        context.Configuration.GetConnectionString("default")));
             });
 
         }
