@@ -1,6 +1,114 @@
 @model Character
+@using tephraSystemEditor.Models;
+@{
+    Layout = "_Layout";
+}
 
-@Html.DisplayForModel()
+<div class="row">
+    <div class="col-md-1">
+        @Html.HiddenFor(b => b.UserID)
+        @Html.HiddenFor(b => b.ID)
+    </div>
+    <div class="col-md-2">
+        <h1>@Model.Name</h1>
+    </div>
+    <div class="col-md-2">
+        <label>Level :</label>
+        @Model.Level
+    </div>
+</div>
+<!-- CHANGE THIS TO A DIV FORMAT-->
+<table class="table">
+    <thead class="thead-dark">
+        <tr>
+        <th>
+            Name
+        </th>
+        <th>
+            Description
+        </th>
 
+        @foreach(var bonus in Enum.GetValues(typeof(Mod)))
+        {
+            <th>
+                @bonus
+            </th>
 
+        }
+        <th>
+            Notes
+        </th>
+        </tr>
+    </thead>
+@foreach(var specialty in Model.Specialties)
+{
+
+    <tr>
+        <td>
+        @specialty.Name
+        </td>
+        <td>
+            <div class="card">
+                <div class="card-header" id="headingOne">
+                     <h5 class="mb-0">
+                    <button class="btn btn-link" data-toggle="collapse" data-target=@specialty.ID+1 aria-expanded="true" aria-controls="collapseOne">
+                     Full Description
+                    </button>
+                    </h5>
+                </div>
+                <div id=@specialty.ID+1 class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+                    <div class="card-body">
+                        @specialty.Description
+                    </div>
+                </div>
+            </div>
+        </td>
+
+        @foreach(var mod in Enum.GetValues(typeof(Mod)))
+        {
+            var show = specialty.Bonuses.FirstOrDefault(e => e.mod == (Mod) mod);
+            {
+                <td>
+                    @if(show != null)
+                    {
+                        @show.Value
+                    }
+                </td>
+
+            }
+        }
+        <td>
+            <div class="card">
+                <div class="card-header" id="heading">
+                    <h5 class="mb-0">
+                    <button class="btn btn-link" data-toggle="collapse" data-target=@specialty.ID aria-expanded="true" aria-controls="collapseOne">
+                        Show Notes
+                    </button>
+                    </h5>
+                </div>
+                <div id=@specialty.ID class="collapse show" aria-labelledby="heading" data-parent="#accordion">
+                    <div class="card-body">
+                        @specialty.Notes
+                    </div>
+                </div>
+            </div>
+        </td>
+        <td style="border: 0px solid black">
+        @Html.ActionLink("Remove", "DeleteSpecialty", new { charID = Model.ID, ID = specialty.ID})
+        </td>
+    </tr>
+}
+    <tr>
+        <td style="border: 0px solid black">
+        @Html.ActionLink("Add", "SelectSpecialty", new { CharacterId = Model.ID })
+        </td>
+    </tr>
+</table>
+<div class="row">
+    <div class="col-md-10">
+    <p>
+        @Model.Description
+    </p>
+    </div>
+</div>
 @await Html.PartialAsync("_Footer")

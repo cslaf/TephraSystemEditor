@@ -1,0 +1,15 @@
+@model Specialty
+
+
+@using(Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+        @Html.DisplayForModel()
+
+        @Html.HiddenFor(m => m.ID)
+        @Html.HiddenFor(m => m.CharacterID)
+
+        <div class="form-actions no-color">
+            <input type="submit" value="DeleteSpecialty" class="btn btn-default" /> |
+            @Html.ActionLink("Back to Character", "ViewCharacter", new { ID = Model.CharacterID})
+        </div>
+}

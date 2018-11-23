@@ -3,22 +3,24 @@
     var m = db.GetAllAttributes();
 }
 
-<li class="dropdown">
+<li class="nav-link dropdown">
     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
         Specialties
     <span class="caret"></span></a>
-    <ul class="dropdown-menu" role="menu">
-        <li>
+    <ul class="dropdown-menu multi-level" role="menu">
+        <li class="dropdown-item", tabindex="-1">
             @Html.ActionLink("All", "Index", "Specialty")
         </li>
         @foreach(var attr in @m)
         {
             <li class="dropdown-submenu">
-                    @Html.ActionLink(@attr.Name, "ShowAttribute", "Specialty", new {name = @attr.Name})
-                    <ul>
+                    <a  class="dropdown-item" tabindex="-1" href="#">
+                        @Html.ActionLink(@attr.Name, "ShowAttribute", "Specialty", new {name = @attr.Name})
+                    </a>
+                    <ul class = "dropdown-menu">
                     @foreach(var skill in attr.Skills)
                     {
-                       <li>
+                       <li class="dropdown-item">
                            @Html.ActionLink(@skill.Name, "ShowSkill", "Specialty", new { name = @skill.Name})
                        </li>
                     }
@@ -27,4 +29,3 @@
         }
     </ul>
 </li>
-     

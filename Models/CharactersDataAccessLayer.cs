@@ -86,7 +86,7 @@ namespace tephraSystemEditor.Models
                 var cmd = new MySql.Data.MySqlClient.MySqlCommand(
                     "SELECT ID, CharacterID, Ch.SpecialtyID " + 
                     "FROM CharactersSpecialty AS Ch JOIN Specialties AS Sp ON Sp.SpecialtyID = Ch.SpecialtyID " +
-                    "WHERE CharacterID = @CharacterID"
+                    "WHERE CharacterID = @CharacterID ORDER BY ID"
                     , con
                 );
                 cmd.Parameters.AddWithValue("@CharacterID", character.ID);
@@ -98,6 +98,7 @@ namespace tephraSystemEditor.Models
                     var specialtyID = rdrCharacter.GetInt32("SpecialtyID");
                     var specialty = systemdb.GetSpecialty(specialtyID);
                     specialty.ID = rdrCharacter.GetInt32("ID");
+                    specialty.CharacterID = rdrCharacter.GetInt32("CharacterID");
                     specialties.Add(specialty);
                 }
                 con.Close();
@@ -181,7 +182,7 @@ namespace tephraSystemEditor.Models
             {
                 con.Open();
                 var cmd = new MySql.Data.MySqlClient.MySqlCommand(
-                    "DELETE FROM Characters WHERE @CharacterID = CharacterID AND @spID = ID"
+                    "DELETE FROM CharactersSpecialty WHERE @CharacterID = CharacterID AND @spID = ID"
                     , con
                     );
                 cmd.Parameters.AddWithValue("@spID", specialty.ID);

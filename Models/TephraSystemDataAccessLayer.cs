@@ -199,6 +199,38 @@ namespace tephraSystemEditor.Models
             return specialties;
         }
 
+        public IEnumerable<Specialty> GetAllSpecialties()
+        {
+            var specialties = new List<Specialty>();
+
+            using(var con = new MySql.Data.MySqlClient.MySqlConnection(connectionString))
+            {
+                var cmd = new MySql.Data.MySqlClient.MySqlCommand
+                ("SELECT SpecialtyID, SkillID, Name, Description FROM Specialties", con); 
+
+                cmd.CommandType = CommandType.Text;
+
+                con.Open();
+                var rdrSkills = cmd.ExecuteReader();
+
+                while (rdrSkills.Read())
+                {
+                    var specialty = new Specialty();
+
+                    specialty.SpecialtyID = Convert.ToInt32(rdrSkills["SpecialtyID"]);
+                    specialty.SkillID = rdrSkills.GetInt32("SkillID");
+                    specialty.Name = rdrSkills["Name"].ToString();
+                    specialty.Description = rdrSkills["Description"].ToString();
+                    specialty.Bonuses = GetBonuses(specialty.SpecialtyID).ToList();
+
+                    specialties.Add(specialty);
+                }
+
+                con.Close();                
+            }
+            return specialties;
+        }
+
         public IEnumerable<Bonus> GetBonuses(int specialtyID){
 
             var bonuses = new List<Bonus>();
@@ -220,8 +252,8 @@ namespace tephraSystemEditor.Models
                     var bonus = new Bonus();
                     bonus.ID = Convert.ToInt32(rdrBonus["BonusID"]);
                     bonus.Value = Convert.ToInt32(rdrBonus["Value"]);
-                    if(Enum.TryParse(typeof(Modifier), rdrBonus["Type"].ToString(), true, out var t))
-                        bonus.mod = (Modifier) t;
+                    if(Enum.TryParse(typeof(Mod), rdrBonus["Type"].ToString(), true, out var t))
+                        bonus.mod = (Mod) t;
                     bonuses.Add(bonus);
                 }
                 con.Close();

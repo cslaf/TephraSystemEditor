@@ -15,6 +15,9 @@
         <div class="col-md-1">
             @Html.ActionLink("Delete", "Delete", new { character.ID })
         </div>
+        <div class="col-md-1">
+            @Html.ActionLink("Detail", "ViewCharacter", new { character.ID})
+        </div>
     </div>
     <hr/>
 }

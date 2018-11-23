@@ -4,7 +4,7 @@
 
 @if (SignInManager.IsSignedIn(User))
 {
-    <li>
+    <li class="nav-link">
         @Html.ActionLink("Characters", "Index", "Characters")
     </li>
 }

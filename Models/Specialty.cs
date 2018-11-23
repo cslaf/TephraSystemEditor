@@ -14,6 +14,7 @@ namespace tephraSystemEditor.Models
         }
         public int ID {get; set;}
         public int SpecialtyID {get; set;}
+        public int CharacterID {get; set;}
         public int SkillID {get; set;}
         public String Name {get; set;}
         public String Description {get; set;}

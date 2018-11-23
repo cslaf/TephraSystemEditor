@@ -17,18 +17,67 @@ namespace tephraSystemEditor.Controllers
     {
         List<Character> characters {get; set;}
         CharactersDataAccessLayer chardb = new CharactersDataAccessLayer();
+        TephraSystemDataAccessLayer systemdb = new TephraSystemDataAccessLayer();
         public ActionResult Index()
         {
             characters = chardb.GetCharacters(User.GetUserId()).ToList();
             return View(characters);
         }
-
+        [HttpGet]
         public ActionResult ViewCharacter(int ID)
         {
             var character = chardb.GetCharacter(ID);
             if (character == null)
                 return NotFound();
             return View(character);
+        }
+
+        [HttpGet]
+        public ActionResult SelectSpecialty(int characterID)
+        {
+            var sp = new Specialty();
+            sp.CharacterID = characterID;
+            ViewBag.specialtyList = systemdb.GetAllSpecialties().ToList();
+            return View(sp);
+        }
+
+        [HttpGet]
+        public ActionResult DeleteSpecialty(int charID, int ID)
+        {
+            var character = new Character();
+            character.ID = charID;
+            var sp = chardb.GetCharacterSpecialties(character).FirstOrDefault(e => e.ID == ID);
+            if(sp == null)
+                return NotFound();
+            return View(sp);
+        }
+        [HttpPost]
+        public ActionResult DeleteSpecialty(Specialty sp)
+        {
+            chardb.DeleteCharacterSpecialty(sp.CharacterID, sp);
+            return RedirectToAction("ViewCharacter", "Characters", new { ID = sp.CharacterID});
+        }
+        [HttpPost]
+        public ActionResult SelectSpecialty(Specialty specialty)
+        {
+            int charID = specialty.CharacterID;
+
+            var sp = systemdb.GetSpecialty(specialty.SpecialtyID);
+            specialty.CharacterID = charID;
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    chardb.AddCharacterSpecialty(charID, sp);
+                    return RedirectToAction("ViewCharacter", "Characters", new { ID = charID});
+                }
+                
+            }catch(Exception e)
+            {
+                ModelState.AddModelError("", e.Message);
+            }
+            ViewBag.specialtyList = systemdb.GetAllSpecialties().ToList();
+            return View(specialty);
         }
 
         [HttpGet]

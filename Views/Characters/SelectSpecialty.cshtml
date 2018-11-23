@@ -1,0 +1,15 @@
+@model Specialty
+
+@using (Html.BeginForm()) 
+{
+    @Html.ValidationSummary()
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(s => s.CharacterID)
+    <!-- turn this into it's own partial view and hope you can fetch data with it -->
+    @Html.DropDownListFor(s => s.SpecialtyID, new SelectList(ViewBag.specialtyList, "SpecialtyID", "Name"))
+
+    <div class="col-md-offset-1 col-md-10">
+        <input type="submit" value="AddSpecialty" class="btn btn-default" />
+    </div>
+}
+
