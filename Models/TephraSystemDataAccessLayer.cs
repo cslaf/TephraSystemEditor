@@ -9,9 +9,9 @@ namespace tephraSystemEditor.Models
 {
     public class TephraSystemDataAccessLayer
     {
-        string connectionString = "server=localhost;uid=root;pwd=12345;database=tephra_system";
+        string connectionString = "server=192.168.1.29;uid=test;pwd=12345;database=tephra_system";
 
-        public IEnumerable<Attr> GetAllAttributes()
+        public IEnumerable<Attr> GetAllAttributes( bool fill = true)
         {
             var attributes = new List<Attr>();
 
@@ -73,7 +73,7 @@ namespace tephraSystemEditor.Models
             return skills;
         }
 
-        public IEnumerable<Skill> GetSkills(int attributeID)
+        public IEnumerable<Skill> GetSkills(int attributeID, bool fill = true)
         {
             var skills = new List<Skill>();
 
@@ -95,8 +95,8 @@ namespace tephraSystemEditor.Models
                     skill.ID = Convert.ToInt32(rdrSkills["SkillID"]);
                     skill.Name = rdrSkills["Name"].ToString();
                     skill.Description = rdrSkills["Description"].ToString();
-
-                    skill.Specialties = GetSpecialties(skill.ID);
+                    if(fill)
+                        skill.Specialties = GetSpecialties(skill.ID);
 
                     skills.Add(skill);
                 }

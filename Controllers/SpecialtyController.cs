@@ -9,7 +9,6 @@ using System;
 
 namespace tephraSystemEditor.Controllers
 {
-    [Authorize]
     public class SpecialtyController : Controller
     {
 
@@ -49,7 +48,8 @@ namespace tephraSystemEditor.Controllers
             return View(sp);
         }
 
-       [HttpPost]
+        [Authorize]
+        [HttpPost]
         public ActionResult Edit (Specialty sp)
         {       
             try
@@ -68,6 +68,7 @@ namespace tephraSystemEditor.Controllers
         }
 
 
+        [Authorize]
         [HttpGet]
         public ActionResult Delete (int id )
         {
@@ -77,6 +78,7 @@ namespace tephraSystemEditor.Controllers
             return View(sp); 
         }
 
+        [Authorize]
         [HttpPost]
         public ActionResult Delete(Specialty sp)
         {
@@ -96,6 +98,7 @@ namespace tephraSystemEditor.Controllers
             return View(sp);
         }
 
+        [Authorize]
         [HttpPost]
         public ActionResult Create (Specialty spec )
         {

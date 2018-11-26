@@ -1,6 +1,6 @@
 @{
     var db = new tephraSystemEditor.Models.TephraSystemDataAccessLayer();
-    var m = db.GetAllAttributes();
+    var m = db.GetAllAttributes(false);
 }
 <!--  edit getallattributes so it only grabs what it needs, because it's slowing down every page -->
 <li class="nav-link dropdown">

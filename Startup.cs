@@ -65,17 +65,25 @@ namespace tephraSystemEditor
 
             services.AddIdentity<IdentityUser, IdentityRole>()
                 .AddEntityFrameworkStores<tephraSystemEditorIdentityDbContext>()
-                .AddDefaultTokenProviders();
+                .AddDefaultTokenProviders()
+                .AddDefaultUI();
             
-           /* services.AddAuthentication().AddFacebook(facebookOptions =>
+            services.AddAuthentication();
+            /*.AddFacebook(facebookOptions =>
             {
                 facebookOptions.AppId = Configuration["Authentication:Facebook:AppId"];
                 facebookOptions.AppSecret = Configuration["Authentication:Facebook:AppSecret"];
             });*/
+            
+
             services.Configure<ForwardedHeadersOptions>(options =>
             {
             options.ForwardedHeaders =
                     ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
+            });
+            services.ConfigureApplicationCookie(options =>
+            {              
+                options.AccessDeniedPath = "/Identity/Account/Login";              
             });
             services.AddSingleton<IEmailSender, EmailSender>();
             services.Configure<AuthMessageSenderOptions>(Configuration);
@@ -93,6 +101,8 @@ namespace tephraSystemEditor
                 app.UseExceptionHandler("/Home/Error");
                 app.UseHsts();
             }
+            
+            app.UseStatusCodePages();
 
             app.UseStaticFiles();
             app.UseCookiePolicy();
