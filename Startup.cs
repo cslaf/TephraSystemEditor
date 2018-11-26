@@ -63,19 +63,21 @@ namespace tephraSystemEditor
                 options.AccessDeniedPath = $"/Identity/Account/AccessDenied";
             });
 
-            services.AddIdentity<IdentityUser, IdentityRole>()
+            services.AddIdentity<IdentityUser, IdentityRole>(config =>
+                {
+                    config.SignIn.RequireConfirmedEmail = false;
+                })
                 .AddEntityFrameworkStores<tephraSystemEditorIdentityDbContext>()
                 .AddDefaultTokenProviders()
                 .AddDefaultUI();
             
             services.AddAuthentication();
-            /*.AddFacebook(facebookOptions =>
+            /*AddGoogle(googleOptions =>
             {
-                facebookOptions.AppId = Configuration["Authentication:Facebook:AppId"];
-                facebookOptions.AppSecret = Configuration["Authentication:Facebook:AppSecret"];
+                googleOptions.ClientId = Configuration["Authentication:Google:ClientId"];
+                googleOptions.ClientSecret = Configuration["Authentication:Google:ClientSecret"];
             });*/
             
-
             services.Configure<ForwardedHeadersOptions>(options =>
             {
             options.ForwardedHeaders =
@@ -85,6 +87,7 @@ namespace tephraSystemEditor
             {              
                 options.AccessDeniedPath = "/Identity/Account/Login";              
             });
+
             services.AddSingleton<IEmailSender, EmailSender>();
             services.Configure<AuthMessageSenderOptions>(Configuration);
         }
