@@ -9,4 +9,4 @@ test-publish:
 
 reload-service:
   script:
-    - sudo systemctl reload dotnet.service
+    - sudo systemctl reload tephraSystemEditor.service
