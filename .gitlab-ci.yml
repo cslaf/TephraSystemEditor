@@ -5,7 +5,7 @@ test-build:
     - dotnet build
 test-publish:
   script:
-    - dotnet publish --output /srv/dotnet
+    - dotnet publish --output /srv/dotnet/tephraSystemEditor
 
 reload-service:
   script:
