@@ -3,3 +3,10 @@ before_script:
 test-build:
   script:
     - dotnet build
+test-publish:
+  script:
+    - dotnet publish --output /srv/dotnet
+
+reload-service:
+  script:
+    - sudo systemctl reload dotnet.service
