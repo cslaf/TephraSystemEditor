@@ -9,4 +9,4 @@ test-publish:
 
 reload-service:
   script:
-    - sudo systemctl reload tephraSystemEditor.service
+    - sudo systemctl restart tephraSystemEditor.service
