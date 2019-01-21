@@ -1,3 +1,5 @@
+image: dotnet:2.1-sdk
+
 before_script:
 
 test-build:

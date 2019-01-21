@@ -1,6 +1,7 @@
 @model IEnumerable<Specialty>
 
 <table class="table">
+    <thead class="thead-dark">
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.Name)
@@ -10,18 +11,17 @@
         </th>
         <th></th>
     </tr>
+    </thead>
 
     @foreach (var sp in Model)
     {
     <tr>
         <td>
             @Html.DisplayFor(s => sp.Name)
+            @Html.DisplayFor(s => sp.Bonuses)
         </td>
         <td>
             @Html.DisplayFor(s => sp.Description)
-        </td>
-        <td>
-        @Html.DisplayFor(s => sp.Bonuses)
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=sp.SpecialtyID }) |

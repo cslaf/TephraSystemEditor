@@ -2,19 +2,23 @@
 
 
 @model Character
-
+<!-- this is garbage -->
 <div class="row">
-    <div class="col-md-1">
-        <label>ID :</label>
-        @Html.DisplayFor(b => b.ID)
-        @Html.HiddenFor(b => b.UserID)
-    </div>
+    @Html.HiddenFor(b => b.ID)
+    @Html.HiddenFor(b => b.UserID)
     <div class="col-md-2">
         @Model.Name
     </div>
     <div class="col-md-2">
+    <div class="row">
+        <p>a</p>
+    </div>
+    <div class="row">
+        <div class="col-md-8">
         <label>Level :</label>
         @Model.Level
+        </div>
+    </div>
     </div>
     @Html.DisplayFor(p => p.Specialties)
 </div>

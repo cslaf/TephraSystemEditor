@@ -5,6 +5,9 @@ using System.Threading.Tasks;
 using System.Data;
 using tephraSystemEditor.Models;
 
+
+//Change attributes and skills to use enums instead of fetching this stuff from the sql database, this is hella inefficent. 
+
 namespace tephraSystemEditor.Models
 {
     public class TephraSystemDataAccessLayer
