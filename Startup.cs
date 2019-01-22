@@ -11,11 +11,15 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using tephraSystemEditor.Areas.Identity.Data;
 using Microsoft.AspNetCore.Identity.UI.Services;
+using Microsoft.EntityFrameworkCore;
+using tephraSystemEditor.Areas.Identity.Data;
 using tephraSystemEditor.Services;
+using tephraSystemEditor.Models;
 using Pomelo.EntityFrameworkCore;
 using Microsoft.AspNetCore.HttpOverrides;
+using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
+
 namespace tephraSystemEditor
 {
     public class Startup
@@ -72,11 +76,7 @@ namespace tephraSystemEditor
                 .AddDefaultUI();
             
             services.AddAuthentication();
-            /*AddGoogle(googleOptions =>
-            {
-                googleOptions.ClientId = Configuration["Authentication:Google:ClientId"];
-                googleOptions.ClientSecret = Configuration["Authentication:Google:ClientSecret"];
-            });*/
+            services.AddDbContextPool<BaseContext>(opt => opt.UseMySql(Configuration["Default"]));
             
             services.Configure<ForwardedHeadersOptions>(options =>
             {

@@ -13,6 +13,7 @@ namespace tephraSystemEditor.Models
     public class TephraSystemDataAccessLayer
     {
         string connectionString = "server=192.168.1.29;uid=test;pwd=12345;database=tephra_system";
+        
 
         public IEnumerable<Attr> GetAllAttributes( bool fill = true)
         {
